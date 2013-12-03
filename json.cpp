@@ -6,6 +6,7 @@ JsonParser::JsonParser() {
     propMap.clear();
     arrayMap.clear();
     objectMap.clear();
+    primativeMap.clear();
     pushToStack("root");
 }
 
@@ -34,6 +35,22 @@ vector<string> JsonParser::getArray(FILE *file) {
         }
     }
     return tmp;
+}
+
+double JsonParser::getDouble(FILE *file) {
+    char ch;
+    string str = "";
+    while ((ch = fgetc(file))) {
+        if (isdigit(ch) || ch == '.') {
+            str += ch;
+        }
+        else {
+            ungetc(ch, file);
+            break;
+        }
+    }
+    double value = atof(str.c_str());
+    return value;
 }
 
 /*
@@ -96,6 +113,12 @@ void JsonParser::jsonParse(FILE *file) {
                     arrayMap[pair<string, int> (key, counter)] = array;
                     break;
                 }
+                else if (isdigit(ch)) {
+                    ungetc(ch, file);
+                    double value = getDouble(file);
+                    primativeMap[pair<string, int> (key, counter)] = value;
+                    break;
+                }
                 /*
                 else if (ch == '{') {
                     vector<pair<string, int> > innerState = getObject(file);
@@ -137,6 +160,9 @@ void JsonParser::jsonPrinter() {
                 }
                 printIndent(tabSpace);
                 printf("]\n");
+            }
+            else if (primativeMap.find(pair<string, int> (it->first, tabSpace/2)) != primativeMap.end()) {
+                printf(" : %g\n", primativeMap[pair<string, int> (it->first, tabSpace/2)]);
             }
             else {
                 printf("\n");
