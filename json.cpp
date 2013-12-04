@@ -7,7 +7,6 @@ JsonParser::JsonParser() {
     arrayMap.clear();
     objectMap.clear();
     primativeMap.clear();
-    pushToStack("root");
 }
 
 void JsonParser::printIndent(int tabSpace) {
@@ -32,6 +31,14 @@ vector<string> JsonParser::getArray(FILE *file) {
         if (ch == '\"') {
             string element = getString(file);
             tmp.push_back(element);
+        }
+        else if (isdigit(ch)) {
+            ungetc(ch, file);
+            double value = getDouble(file);
+            char tmpCharStr[1000];
+            sprintf(tmpCharStr, "%g", value);
+            string tmpStr = string(tmpCharStr);
+            tmp.push_back(tmpStr);
         }
     }
     return tmp;
@@ -171,9 +178,6 @@ void JsonParser::jsonPrinter() {
     }
 }
 
-void JsonParser::pushToStack(string str) {
-    stateStack.push_back(pair<string, int> (str, counter));
-}
 
 void JsonParser::addCounter() {
     counter++;

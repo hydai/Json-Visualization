@@ -20,7 +20,6 @@ class JsonParser {
         void printIndent(int tabSpace);
         void jsonParse(FILE *file);
         void jsonPrinter();
-        void pushToStack(string str);
         void addCounter();
         void minusCounter();
         string getString(FILE *file);
