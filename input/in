@@ -1,0 +1,9 @@
+{
+    "strA"  :  "A",
+    "strB":"B",
+    "strC": "C",
+    "arrD" :["inA", "inB", "inC"]
+    "strE" : "E",
+    "arrF":["OAO", "QAQ", "OWO", "=A=", "= =+"]
+    "strG" : 123 
+}

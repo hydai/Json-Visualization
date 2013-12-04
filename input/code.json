@@ -1,0 +1,1 @@
+{"query":{},"login":{},"submission":{"code":"#include<stdio.h>\n\nint main(){\n\t//我\n\n\tint a, b;\n\twhile(scanf(\"%d%d\", &a, &b) > 0)\n\t\tprintf(\"%d\\n\", a + b);\n\treturn 0;\n}\n","language":"C++"},"type":"submission"}
